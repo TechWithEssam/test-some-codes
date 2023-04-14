@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    logout {{request.user.username}}
+{% endblock title %}
+    
+
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+<div class="container mt-5">
+    <form action="." method="post">
+        {% csrf_token %}
+        <p>
+            are you sure you want to logout ? {{logout}}
+        </p>
+        <button type="submit">yes</button>
+    </form>
+    {% else %}
+<p class="container">
+    you are not login in please <a href="{% url 'accounts:login' %}"><button type="button" class="btn btn-primary">Sign In</button></a>  
+
+    
+    <a href="{%  url 'accounts:register' %}"><button type="button" class="btn btn-success">Sign Up</button></a>
+</p>
+{% endif %}
+</div>
+
+    
+{% endblock content %}
+    

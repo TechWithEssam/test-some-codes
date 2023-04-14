@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    home
+{% endblock title %}
+    
+
+
+{% block content %}
+    
+    <div class="container mt-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for item in qs %}
+            {% if item.all_image_related %}
+            <div class="col">
+                <div class="card">
+                  <a href="{{item.detail_product_url}}"><img src="{{item.first_image.image.url}}" class="card-img-top" alt="{{item.name}}"></a>
+                  <div class="card-body">
+                    <h5 class="card-title">{{item.name}}</h5>
+                    <p class="card-text">
+                        
+                        {% if item.discound %}
+                            <del>{{item.price}}</del> <span>{{item.new_price_after_discound}}</span>
+                        {% else %}
+                        {{item.new_price_after_discound}}
+                        {% endif %}
+                    </p>
+                    
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+        
+{% endblock content %}
+    

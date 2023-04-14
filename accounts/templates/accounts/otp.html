@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    verfiy
+{% endblock title %}
+    
+
+
+{% block content %}
+    <div class="container mt-5">
+        <p>
+            Check your email We have sent you a verification email
+        </p>
+        {% if erorr_message %}
+        <p>
+            {{erorr_message}}
+        </p>
+        {% endif %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" name="otp" id="">
+            <button type="submit">confirm</button>
+        </form>
+         
+        <form action="{% url 'accounts:resend' %}" method="get" name="name_form">
+            {% csrf_token %}
+            <input type="hidden" name="resend" value="resend">
+
+            If you do not receive the confirmation message, click here <button type="submit">resend</button>
+        </form>
+    </div>
+{% endblock content %}
+    

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    
+    {% if l_form %}
+        login
+    {% elif r_form %}
+        register
+    {% else %}
+        logout {{request.user.username}}
+    {% endif %}
+        
+{% endblock title %}
+    
+
+
+{% block content %}
+    <div class="container mt-5">
+        
+        {% if messages %}
+        
+        {% for message in messages %}
+            <p>
+                {{message}}
+            </p>
+        {% endfor %}
+            
+            
+        {% endif %}
+{% if not request.user.is_authenticated  %}
+<form action="" method="post">
+{% csrf_token %}
+    {% if l_form %}
+    {{l_form.as_p}}
+    <button type="submit" class="btn btn-primary">login</button>
+    <small>
+        Need account? <a href="{% url 'accounts:register' %}">Sign Up</a>
+    </small>
+    <br>
+    <small>
+         <a href="{% url 'accounts:password_reset' %}">forget password?</a>
+    </small>
+    {% elif r_form %}
+    {{r_form.as_p}}
+    <button type="submit" class="btn btn-primary">Register</button>
+    <small>
+        have account? <a href="{% url 'accounts:login' %}">Sign in</a>
+    </small>
+    {% endif %}
+</form>
+{% else %}
+<p>
+    already you are logged in {{request.user.username}} <a href="{% url 'accounts:logout' %}">logout</a>
+</p>
+{% endif %}
+    </div>
+{% endblock content %}
+    

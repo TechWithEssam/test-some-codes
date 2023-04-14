@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}
+    manager
+{% endblock title %}
+    
+
+
+{% block content %}
+    <div class="container mt-5">
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for item in object.all_image_related %}
+            <div class="col">
+                <div class="card">
+                    <p>
+                        <a href="{{item.delete_image_url}}">delete</a>
+                    </p>
+                  <img src="{{item.image.url}}" class="card-img-top" alt="...">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <form  class='space-y-5' method="POST" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+            {{ form.as_p }}
+            </div>
+        
+            <div>
+                {{ formset.management_form }}
+                <div class="pb-3 border-b space-y-3" id="attachments">
+                    {% for form in formset %}
+                    <div>
+                        {{ form.as_p }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        
+            <button class="btn-submit mt-2" id="add-attachment-btn">Add attachment</button>
+            <button type="submit" class="btn-submit mt-2">Save</button>
+        </form>  
+        <div aria-hidden="true" class="hidden"  id="blank-form">
+            {{ formset.empty_form }}
+        </div>
+    </div>
+   
+{% endblock content %}
+
+
+{% block script %}
+        <script src="{% static 'action/atachments.js' %}" defer></script>
+{% endblock script %}
